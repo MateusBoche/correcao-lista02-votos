@@ -19,9 +19,22 @@ public class Main {
         inicializarMapaDeCanditados();
         while(true){
             int voto = obterVoto();
+            if(voto == 0){
+                break;
+            }
+            registrarVoto(voto);
         }
 
 
+    }
+
+    private void registrarVoto(int voto) {
+        if(!mapaDeCandidatos.containsKey(voto)){
+            System.out.println("Candidato inexistente. Tente novamente ");
+            return;
+        }
+        Canditado canditado = mapaDeCandidatos.get(voto);
+        canditado.adicionarVoto();
     }
 
     private int obterVoto() {
