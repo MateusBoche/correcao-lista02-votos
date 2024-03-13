@@ -14,6 +14,10 @@ public class Canditado {
         numeroDeVotos+=1;
     }
 
+    public int getNumeroDeVotos(){
+        return numeroDeVotos;
+    }
+
     public int getId() {
         return id;
     }

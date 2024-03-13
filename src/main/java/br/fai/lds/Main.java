@@ -2,9 +2,7 @@ package br.fai.lds;
 
 import br.fai.lds.models.Canditado;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private Map<Integer, Canditado> mapaDeCandidatos = new HashMap<>();
@@ -24,8 +22,55 @@ public class Main {
             }
             registrarVoto(voto);
         }
+        apurarVotos();
 
 
+    }
+
+    private void apurarVotos() {
+        List<Canditado>canditados = new ArrayList<>();
+
+        for (Canditado canditado:mapaDeCandidatos.values()){
+            canditados.add(canditado);
+        }
+        //faz ordenação da lista
+        canditados.sort((a,b)-> {
+            return  b.getNumeroDeVotos() - a.getNumeroDeVotos();
+        });
+
+        Canditado canditadoEleito =  canditados.get(0);
+        if(canditadoEleito.getNumeroDeVotos() == 0){
+            System.out.println("Nenhum candidato foi votado.");
+            return;
+        }
+        List<Canditado>candidatosEmpatados = new ArrayList<>();
+        for (Canditado canditado:canditados){
+            if(canditado.getId() == canditadoEleito.getId()){
+                continue;
+            }
+            if(canditado.getNumeroDeVotos()== canditadoEleito.getNumeroDeVotos()){
+                candidatosEmpatados.add(canditado);
+            }
+        }
+        if(!candidatosEmpatados.isEmpty()){
+            System.out.println("Ocorreu empate entre os candidatos. ");
+
+            for (Canditado canditado:candidatosEmpatados){
+                System.out.println("Candidatos empatados: " + canditado.getNome() + "com " + canditado.getNumeroDeVotos() + " votos");
+            }
+
+            return;
+        }
+
+        System.out.println("O candidato eleito é o " + canditadoEleito.getNome() + " com " + canditadoEleito.getNumeroDeVotos());
+
+        for (int i = 0; i < canditados.size(); i++) {
+            int ordemNumerica = i + 1;
+            Canditado canditado = canditados.get(i);
+            System.out.println("Lugar " + ordemNumerica + " Candidato " + canditado.getNome()+ " com "+ canditado.getNumeroDeVotos() + " votos");
+
+        }
+        return;
     }
 
     private void registrarVoto(int voto) {
