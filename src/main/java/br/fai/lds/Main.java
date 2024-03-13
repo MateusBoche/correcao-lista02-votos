@@ -4,6 +4,7 @@ import br.fai.lds.models.Canditado;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     private Map<Integer, Canditado> mapaDeCandidatos = new HashMap<>();
@@ -16,6 +17,26 @@ public class Main {
 
     private void start() {
         inicializarMapaDeCanditados();
+        while(true){
+            int voto = obterVoto();
+        }
+
+
+    }
+
+    private int obterVoto() {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.println("Digite seu voto: ");
+            int voto = scanner.nextInt();
+            return voto;
+        }catch (Exception e){
+            scanner.next();
+            System.out.println("Voto invalido");
+            return -1;
+
+        }
+
     }
 
     private void inicializarMapaDeCanditados() {
